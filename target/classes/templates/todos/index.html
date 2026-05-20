@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:insert="fragments/head :: head('Sparta To-Do List')"></div>
+<body class="bg-light">
+
+<div th:replace="fragments/header :: header"></div>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-center">Todo List</h1>
+        <a th:href="@{/todos/new}" class="btn btn-primary">Add New Todo</a>
+    </div>
+    <form th:action="@{/todos/search}" method="get" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="query" class="form-control" placeholder="Search by title or description" required>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+    <table class="table table-striped mt-4">
+        <thead>
+        <tr>
+            <th>Spartan</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Complete</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="todo : ${todos}">
+            <td th:text="${todo.getSpartanDto() != null ? todo.getSpartanDto().getUsername() : 'N/A'}"></td>            <td th:text="${todo.title}"></td>
+            <td th:text="${todo.description}"></td>
+            <td>
+                <input type="checkbox" th:checked="${todo.complete}" disabled>
+            </td>
+            <td>
+                <a th:href="@{/todos/{id}(id=${todo.id})}" class="btn btn-info btn-sm">View</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:insert="fragments/head :: head('View Sparta To-Do')"></div>
+<body class="bg-light">
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container mt-5">
+    <h1 class="text-center">Edit Todo</h1>
+    <!-- Form to edit a Todo item -->
+    <form th:action="@{/todos/{id}/update(id=${todo.id})}" th:object="${todo}" method="post" class="mt-4">
+        <!-- ID Field (Read-Only) -->
+        <div class="mb-3">
+            <label for="id" class="form-label">ID</label>
+            <input type="text" id="id" name="id" th:field="*{id}" class="form-control" readonly>
+        </div>
+        <!-- Title Field -->
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" id="title" name="title" th:field="*{title}" class="form-control" required>
+        </div>
+        <!-- Description Field -->
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea id="description" name="description" th:field="*{description}" class="form-control"></textarea>
+        </div>
+        <!-- Completed Checkbox -->
+        <div class="mb-3 form-check">
+            <input type="checkbox" id="complete" name="complete" th:field="*{complete}" class="form-check-input">
+            <label for="complete" class="form-check-label">Completed</label>
+        </div>
+        <!-- Submit, Cancel, and Delete Buttons -->
+        <div class="text-center">
+            <!-- Save Button -->
+            <form th:action="@{/todos/{id}/update(id=${todo.id})}" method="post" class="d-inline">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+            <!-- Delete Button with confirmation -->
+            <form th:action="@{/todos/{id}/delete(id=${todo.id})}" method="post" class="d-inline" onclick="return confirm('Are you sure you want to delete this To Do item?')">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+            <!-- Cancel Button -->
+            <a href="/todos" class="btn btn-secondary d-inline">Cancel</a>
+        </div>
+    </form>
+</div>
+</body>
